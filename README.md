@@ -10,8 +10,8 @@
 
 ### HTML
 ```html
-<noscript data-lazyload-src="{{{srcThumb}}}" alt="{{{alt}}}">
-	<img src="{{{srcThumb}}}" alt="{{{alt}}}">
+<noscript data-lazyload-src="{{{imgSrc}}}">
+	<img src="{{{imgSrc}}}" alt="{{{alt}}}">
 </noscript>
 ```
 
