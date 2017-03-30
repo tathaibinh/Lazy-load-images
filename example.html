@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Lazy load images - example</title>
+    <meta name="description" content="Lazy load images - example">
+    <meta name="author" content="Lukas Bacevicius">
+    <style>
+        img {
+            opacity: 1;
+            transition: opacity .35s ease;
+
+            /**/
+            width:100%;
+        }
+
+        img[data-lazyload-src] {
+            opacity: 0;
+        }
+
+        .image-wrap {
+            display: inline-block;
+            width: 50%;
+            float: left;
+            min-height:200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <div class="image-wrap">
+        <noscript data-lazyload-src="https://dummyimage.com/600x400/000/fff">
+            <img src="https://dummyimage.com/600x400/000/fff" alt="dummy image">
+        </noscript>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+        <script src="dist/script.js"></script>
+        <script>
+            $(document).find("noscript").each(function (index, image) {
+                $(image).lazyload();
+            });
+        </script>
+</body>
+
+</html>
