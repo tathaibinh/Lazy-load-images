@@ -17,5 +17,5 @@
 
 ### JavaScript
 ```javascript
-$([data-lazyload-src]).lazyload();
+$('[data-lazyload-src]').lazyload();
 ```
