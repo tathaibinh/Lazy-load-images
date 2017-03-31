@@ -19,3 +19,7 @@
 ```javascript
 $('[data-lazyload-src]').lazyload();
 ```
+
+## TO DO
+
+* Get rid of jQuery dependency
