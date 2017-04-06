@@ -12,86 +12,73 @@
 
     lazyload.prototype = {
         init: function () {
-            var self = this;
+            this.assemble();
 
-            self.assemble();
-
-            $(window).on("resize scroll", function () {
+            $(window).on('resize scroll', () => {
                 // Images were created and appended, no need for init
-                self.makeImageVisible();
+                this.makeImageVisible();
             });
         },
         assemble: function () {
-
             //Create image
             this.createImage();
 
             //Append image to DOM
             this.appendImage();
 
+            //Copy attributes from noscript and add them to image
+            this.addAttributes();
+
             if (this.isInViewport(this.lazyImage)) {
                 this.makeImageVisible();
             }
-
         },
         makeImageVisible: function () {
-            if (this.$element[0].hasAttribute("data-lazyload-src") && this.isInViewport(this.lazyImage)) {
-
-                //Copy attributes from noscript
-                this.addAttributes();
-
-                // Add src pointing to the image
+            if (this.$element[0].hasAttribute('data-lazyload-src') && this.isInViewport(this.lazyImage)) {
                 this.addSource();
-
-                // Animate image in
-                this.animateImageIn();
-
             }
         },
         createImage: function () {
-
             this.lazyImage = new Image();
-            this.lazyImage.src = "";
+            this.lazyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D'; // empty gif
 
             // Element needs some size so we can detect if it's visible in user's viewport
-            this.lazyImage.style = "width:1px; height:1px";
-
+            this.lazyImage.style = 'width:1px; height:1px';
         },
         addAttributes: function () {
-            var self = this;
-
-            this.lazyImage.style = "";
-
-            $.each(this.$element.prop("attributes"), function () {
-                $(self.lazyImage).attr(this.name, this.value || "");
+            $.each(this.$element.prop('attributes'), (index, attribute) => {
+                $(this.lazyImage).attr(attribute.name, attribute.value || '');
             });
-
         },
         addSource: function () {
+            this.lazyImage.style = '';
 
-            this.lazyImage.src = this.lazyImage.getAttribute("data-lazyload-src");
+            this.lazyImage.setAttribute('src', this.lazyImage.getAttribute('data-lazyload-src'));
+            this.$element[0].removeAttribute('data-lazyload-src');
 
-            this.$element[0].removeAttribute("data-lazyload-src");
-
+            // Animate image in
+            this.lazyImage.onload = () => {
+                // Throttle animation
+                setTimeout(() => {
+                    this.lazyImage.removeAttribute('data-lazyload-src');
+                }, 1000/60);
+            };
         },
         appendImage: function () {
             this.$element[0].parentNode.insertBefore(this.lazyImage, this.$element[0]);
         },
-        animateImageIn: function () {
-            this.lazyImage.onload = () => {
-                this.lazyImage.removeAttribute('data-lazyload-src');
-            };
-        },
         isInViewport: function (element) {
-            var rect = element.getBoundingClientRect();
+            let rect = element.getBoundingClientRect();
 
+            /**
+             * Only checking vertical position
+             * for images positioned outside
+             * of the viewport but vetically is in viewport
+            */
             return (
                 rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
             );
-
         }
     };
 
