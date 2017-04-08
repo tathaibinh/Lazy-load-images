@@ -10,8 +10,6 @@
         img {
             opacity: 1;
             transition: opacity .35s ease;
-
-            /**/
             width:100%;
         }
 
@@ -133,9 +131,7 @@
         crossorigin="anonymous"></script>
         <script src="lazyload.js"></script>
         <script>
-            $('[data-lazyload-src]').each(function (index, image) {
-                $(image).lazyload();
-            });
+            $(document).lazyload();
         </script>
 </body>
 

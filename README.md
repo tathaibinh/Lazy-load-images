@@ -17,7 +17,7 @@
 
 ### JavaScript
 ```javascript
-$('[data-lazyload-src]').lazyload();
+$(document).lazyload();
 ```
 
 ## TO DO

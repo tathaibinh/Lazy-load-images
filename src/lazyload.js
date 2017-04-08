@@ -2,9 +2,9 @@
     /**
      * Constructor
      *
-     * @param {object} element
+     * @param {object} doc
      */
-    var lazyload = function (element) {
+    var lazyload = function (doc) {
         this.$doc = $(doc);
 
         this.init();
@@ -13,31 +13,32 @@
     lazyload.prototype = {
         init: function () {
             this.$doc.find('noscript').each((index, noscript) => {
-                const lazyImage = $(noscript).prev()[0];
+                const lazyImage = new Image();
 
                 this.assemble(noscript, lazyImage);
             });
-
-
-            $(window).on('resize scroll', () => {
-                this.$doc.find('noscript').each((index, noscript) => {
-                    const lazyImage = $(noscript).prev()[0];
-
-                    // Images were created and appended, no need for init
-                    setTimeout(() => {
-                        this.makeImageVisible(noscript, lazyImage);
-                    }, 1000 / 60);
-                });
-            });
         },
         assemble: function (noscript, lazyImage) {
+            lazyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D'; // Empty gif
+            lazyImage.style = ' width:1px; height: 1px;';
+
             //Copy attributes from noscript and add them to image
             this.addAttributes(noscript, lazyImage);
-            lazyImage.style = 'position:static; width:1px; height: 1px;';
+
+            // Append image
+            noscript.parentNode.insertBefore(lazyImage, noscript);
 
             if (this.isInViewport(lazyImage)) {
-                this.makeImageVisible(noscript, lazyImage);
+                setTimeout(() => {
+                    this.makeImageVisible(noscript, lazyImage);
+                }, 1000 / 60);
             }
+
+            $(window).on('resize scroll', () => {
+                setTimeout(() => {
+                    this.makeImageVisible(noscript, lazyImage);
+                }, 1000 / 60);
+            });
         },
         makeImageVisible: function (noscript, lazyImage) {
             if (noscript.hasAttribute('data-lazyload-src') && this.isInViewport(lazyImage)) {

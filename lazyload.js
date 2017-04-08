@@ -4,10 +4,10 @@
     /**
      * Constructor
      *
-     * @param {object} element
+     * @param {object} doc
      */
-    var lazyload = function lazyload(element) {
-        this.$element = $(element);
+    var lazyload = function lazyload(doc) {
+        this.$doc = $(doc);
 
         this.init();
     };
@@ -16,64 +16,59 @@
         init: function init() {
             var _this = this;
 
-            this.assemble();
+            this.$doc.find('noscript').each(function (index, noscript) {
+                var lazyImage = new Image();
 
-            $(window).on('resize scroll', function () {
-                // Images were created and appended, no need for init
-                _this.makeImageVisible();
+                _this.assemble(noscript, lazyImage);
             });
         },
-        assemble: function assemble() {
-            //Create image
-            this.createImage();
-
-            //Append image to DOM
-            this.appendImage();
-
-            //Copy attributes from noscript and add them to image
-            this.addAttributes();
-
-            if (this.isInViewport(this.lazyImage)) {
-                this.makeImageVisible();
-            }
-        },
-        makeImageVisible: function makeImageVisible() {
-            if (this.$element[0].hasAttribute('data-lazyload-src') && this.isInViewport(this.lazyImage)) {
-                this.addSource();
-            }
-        },
-        createImage: function createImage() {
-            this.lazyImage = new Image();
-            this.lazyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D'; // empty gif
-
-            // Element needs some size so we can detect if it's visible in user's viewport
-            this.lazyImage.style = 'width:1px; height:1px';
-        },
-        addAttributes: function addAttributes() {
+        assemble: function assemble(noscript, lazyImage) {
             var _this2 = this;
 
-            $.each(this.$element.prop('attributes'), function (index, attribute) {
-                $(_this2.lazyImage).attr(attribute.name, attribute.value || '');
+            lazyImage.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D'; // Empty gif
+            lazyImage.style = ' width:1px; height: 1px;';
+
+            //Copy attributes from noscript and add them to image
+            this.addAttributes(noscript, lazyImage);
+
+            // Append image
+            noscript.parentNode.insertBefore(lazyImage, noscript);
+
+            if (this.isInViewport(lazyImage)) {
+                setTimeout(function () {
+                    _this2.makeImageVisible(noscript, lazyImage);
+                }, 1000 / 60);
+            }
+
+            $(window).on('resize scroll', function () {
+                setTimeout(function () {
+                    _this2.makeImageVisible(noscript, lazyImage);
+                }, 1000 / 60);
             });
         },
-        addSource: function addSource() {
-            var _this3 = this;
+        makeImageVisible: function makeImageVisible(noscript, lazyImage) {
+            if (noscript.hasAttribute('data-lazyload-src') && this.isInViewport(lazyImage)) {
+                this.addSource(noscript, lazyImage);
+            }
+        },
+        addAttributes: function addAttributes(noscript, lazyImage) {
+            $.each($(noscript).prop('attributes'), function (index, attribute) {
+                $(lazyImage).attr(attribute.name, attribute.value || '');
+            });
+        },
+        addSource: function addSource(noscript, lazyImage) {
+            lazyImage.style = '';
 
-            this.lazyImage.style = '';
-
-            this.lazyImage.setAttribute('src', this.lazyImage.getAttribute('data-lazyload-src'));
-            this.$element[0].removeAttribute('data-lazyload-src');
+            lazyImage.setAttribute('src', lazyImage.getAttribute('data-lazyload-src'));
+            noscript.removeAttribute('data-lazyload-src');
 
             // Animate image in
-            this.lazyImage.onload = function () {
+            lazyImage.onload = function () {
                 // Throttle animation
                 setTimeout(function () {
-                    _this3.lazyImage.removeAttribute('data-lazyload-src');
+                    lazyImage.removeAttribute('data-lazyload-src');
                 }, 1000 / 60);
             };
-        },
-        appendImage: function appendImage() {
-            this.$element[0].parentNode.insertBefore(this.lazyImage, this.$element[0]);
         },
         isInViewport: function isInViewport(element) {
             var rect = element.getBoundingClientRect();
@@ -82,17 +77,17 @@
              * Only checking vertical position
              * for images positioned outside
              * of the viewport but vetically is in viewport
-            */
+             */
             return rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
         }
     };
 
     $.fn.lazyload = function () {
-        var _this4 = this;
+        var _this3 = this;
 
         return this.each(function () {
-            if (!$.data(_this4, 'lazyload')) {
-                $.data(_this4, 'lazyload', new lazyload(_this4));
+            if (!$.data(_this3, 'lazyload')) {
+                $.data(_this3, 'lazyload', new lazyload(_this3));
             }
         });
     };
